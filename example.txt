@@ -1,0 +1,6 @@
+This just happens to match every type in Go. 
+Because an empty interface doesn’t tell you anything about 
+the value it represents, there isn’t a lot you can do with it. 
+One common use of the empty interface is as a placeholder 
+for data of uncertain schema that’s read from an external source, 
+like a JSON file”
