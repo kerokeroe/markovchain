@@ -4,6 +4,7 @@ import (
 	"bufio" //to read the data
 	"fmt"   //to print out
 	"os"    //to open the file
+	"strings"
 )
 
 func main() {
@@ -16,6 +17,10 @@ func main() {
 	for scanner.Scan() {
 		line := scanner.Text()
 		fmt.Println(line)
+		items := strings.Split(line, " ")
+		for _, item := range items {
+			fmt.Println(item)
+		}
 	}
 
 	// if len(os.Args)<2{
