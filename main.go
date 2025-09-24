@@ -7,17 +7,17 @@ import (
 )
 
 func main() {
-	fmt.Println("yo yo yo")
 	file, f_err := os.Open("example.txt")
 	if f_err != nil {
 		panic(f_err)
 	}
-	scanner := bufio.NewScanner(file) //buffer where we can read the file into
+	scanner := bufio.NewScanner(file)
+
 	for scanner.Scan() {
-		//this for loop is going to scan the file line by line
-		line := scanner.Text() //going to populate the current line
+		line := scanner.Text()
 		fmt.Println(line)
 	}
+
 	// if len(os.Args)<2{
 	// 	fmt.Print("Error: no input text")
 	// 	os.Exit(1)
