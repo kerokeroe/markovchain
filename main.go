@@ -67,6 +67,29 @@ func printUsage() {
 	fmt.Println("  -l N    Prefix length")
 }
 
+func (a *App) Run() error {
+	var reader io.Reader
+	if a.SourceFile != "" {
+		file, err := os.Open(a.SourceFile)
+		if err != nil {
+			return fmt.Errorf("couldnt open the file %s: %w", a.SourceFile, err)
+		}
+		defer file.Close()
+		reader = file
+	} else {
+		stat, err := os.Stdin.Stat()
+		if err != nil {
+			return fmt.Errorf("couldnt read from stdin: %w", err)
+		}
+		if (stat.Mode() & os.ModeCharDevice) == 0 {
+			reader = os.Stdin
+		} else {
+			return fmt.Errorf("no input bruh")
+		}
+	}
+
+}
+
 func main() {
 	file, f_err := os.Open("example.txt")
 	if f_err != nil {
