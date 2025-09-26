@@ -90,6 +90,24 @@ func (a *App) Run() error {
 
 }
 
+func readWords(source io.Reader) ([]string, error) {
+	scanner := bufio.NewScanner(source)
+	scanner.Split(bufio.ScanWords)
+
+	var words []string
+	for scanner.Scan() {
+		words = append(words, scanner.Text())
+	}
+	if err := scanner.Err(); err != nil {
+		//Catches tokenizer errors (including the “token too long” case if you hit the 64 KB limit).
+		return nil, fmt.Errorf("scanning input faile: %w", err)
+	}
+	return words, nil
+}
+
+func writeWords() {
+	//blabla
+}
 func main() {
 	file, f_err := os.Open("example.txt")
 	if f_err != nil {
