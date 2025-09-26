@@ -26,6 +26,17 @@ func newapp() (*app, error) {
 		printUsage()
 		os.Exit(0)
 	}
+	var filepath string
+	if fs.NArg() > 0 {
+		filepath = fs.Arg(0)
+	}
+
+	if *prefixLen < 1 || *prefixLen > 5 {
+		return nil, fmt.Errorf("prefix length should be between 1 and 5")
+	}
+	if *wordsNum < 1 || *wordsNum > 10000 {
+		return nil, fmt.Errorf("the number of generated words should be between 1 and 10000")
+	}
 
 }
 
