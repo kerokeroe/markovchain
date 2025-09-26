@@ -88,6 +88,20 @@ func (a *App) Run() error {
 		}
 	}
 
+	//reading the file
+	words, err := readWords(reader)
+	if err != nil {
+		return fmt.Errorf("failed to read input: %w", err)
+	}
+	if len(words) == 0 {
+		return fmt.Errorf("input text is empty")
+	}
+	if a.PrefixLen > 0 && len(words) < a.PrefixLen {
+		return fmt.Errorf("input text is too short")
+	}
+
+	//build chain
+
 }
 
 func readWords(source io.Reader) ([]string, error) {
