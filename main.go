@@ -9,7 +9,14 @@ import (
 	"strings"
 )
 
-func newapp() (*app, error) {
+type App struct {
+	PrefixLen      int
+	WordsNumber    int
+	StartingPrefix string
+	SourceFile     string
+}
+
+func NewApp() (*App, error) {
 	fs := flag.NewFlagSet("markovchain", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
 
@@ -37,6 +44,12 @@ func newapp() (*app, error) {
 	if *wordsNum < 1 || *wordsNum > 10000 {
 		return nil, fmt.Errorf("the number of generated words should be between 1 and 10000")
 	}
+	return &App{
+		PrefixLen:      *prefixLen,
+		WordsNumber:    *wordsNum,
+		StartingPrefix: *startPrefix,
+		SourceFile:     filepath,
+	}, nil
 
 }
 
