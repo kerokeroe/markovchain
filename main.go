@@ -2,10 +2,46 @@ package main
 
 import (
 	"bufio" //to read the data
-	"fmt"   //to print out
-	"os"    //to open the file
+	"flag"
+	"fmt" //to print out
+	"io"
+	"os" //to open the file
 	"strings"
 )
+
+func newapp() (*app, error) {
+	fs := flag.NewFlagSet("markovchain", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+
+	prefixLen := fs.Int("l", 2, "length of the prefix")
+	wordsNum := fs.Int("w", 10, "how many words to generate")
+	startPrefix := fs.String("p", "", "what word(s) should it start from")
+	help := fs.Bool("help", false, "do you need any help?")
+
+	if err := fs.Parse(os.Args[1:]); err != nil {
+		printUsage()
+		return nil, fmt.Errorf("invalid flags: %w", err)
+	}
+	if *help {
+		printUsage()
+		os.Exit(0)
+	}
+
+}
+
+func printUsage() {
+	fmt.Println("Markov Chain text generator.")
+	fmt.Println()
+	fmt.Println("Usage:")
+	fmt.Println("  markovchain [-w <N>] [-p <S>] [-l <N>] [file]")
+	fmt.Println("  markovchain --help")
+	fmt.Println()
+	fmt.Println("Options:")
+	fmt.Println("  --help  Show this screen.")
+	fmt.Println("  -w N    Number of maximum words")
+	fmt.Println("  -p S    Starting prefix")
+	fmt.Println("  -l N    Prefix length")
+}
 
 func main() {
 	file, f_err := os.Open("example.txt")
