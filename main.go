@@ -142,9 +142,12 @@ func (b Builder) Build (words []string) (*Chain, error){
 	}
 
 	for i:=0; i<len(words)-b.prefixLen-1; i++{
-		prefixSlice := 
-
+		prefixSlice := words[i:i+b.prefixLen]
+		key := strings.ToLower(strings.Join(prefixSlice, " "))
+		suffix := words[i+b.prefixLen]
+		chainmap[key] = append(chainmap[key], suffix)
 	}
+	return &Chain{Chain: chainmap, prefixLen: : b.prefixLen}, nil
 
 }
 func readWords(source io.Reader) ([]string, error) {
