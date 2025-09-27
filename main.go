@@ -101,9 +101,52 @@ func (a *App) Run() error {
 	}
 
 	//build chain
+	builder, err := NewBuilder(a.PrefixLen)
+	if err!=nil{
+		return fmt.Errorf("smth wrong with prefix, couldnt create the builder: %w", err)
+	}
+	chain := 
 
 }
 
+type Builder struct{
+	prefixLen int
+}
+
+//this function validates prefixLen and returns the builder
+func NewBuilder (prefixL int) (*Builder, error){
+	if prefixL < 0 {
+		return nil, fmt.Errorf("prefix length cant be negative")
+	}
+	if prefixL >5 {
+		return nil, fmt.Errorf("prefix should be shorter than 5")
+	}
+	return &Builder{prefixLen: prefixL}, nil
+}
+
+type Chain struct{
+	Chain map[string][]string
+	prefixLen int
+}
+
+//function that builds the chain
+func (b Builder) Build (words []string) (*Chain, error){
+	chainmap := make([string] string, len(words))
+
+	if b.prefixLen == 0 {
+		chainmap[""] = append(chainmap[""], words ...)
+		return &Chain{Chain: chainmap, prefixLen: b.prefixLen}, nil
+	}
+	if b.prefixLen > len(words){
+		return &Chain{Chain: chainmap, prefixLen: b.prefixLen}, nil
+	}
+
+	for i:=0; i<len(words)-b.prefixLen-1; i++{
+		prefixSlice := 
+
+	}
+
+}
 func readWords(source io.Reader) ([]string, error) {
 	scanner := bufio.NewScanner(source)
 	scanner.Split(bufio.ScanWords)
